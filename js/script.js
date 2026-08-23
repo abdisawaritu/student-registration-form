@@ -572,4 +572,4 @@ if (passwordToggle) {
   });
 }
 
-// I have finished   next  move the next stage  to improce the validation into professional validiton ui    update the code and give the full code and  expalink the pace i have to update the code  steps by steps 
+
