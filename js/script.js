@@ -1,10 +1,10 @@
 // =====================================================
 // STUDENT REGISTRATION FORM
-// DOM MANIPULATION
+// FORM VALIDATION
 // =====================================================
 
 // =====================================================
-// 1. SELECT IMPORTANT ELEMENTS
+// 1. SELECT FORM ELEMENTS
 // =====================================================
 
 const registrationForm = document.getElementById("registrationForm");
@@ -49,213 +49,514 @@ const resetButton = document.getElementById("resetButton");
 
 const formMessage = document.getElementById("formMessage");
 
-// =====================================================
-// 2. TEXT CONTENT MANIPULATION
-// =====================================================
-
-firstName.addEventListener("input", function () {
-  if (firstName.value.length > 0) {
-    formMessage.textContent = "You are entering your first name.";
-  } else {
-    formMessage.textContent = "";
-  }
-});
+const passwordToggle = document.getElementById("passwordToggle");
 
 // =====================================================
-// 3. CLASSLIST MANIPULATION
+// 2. HELPER FUNCTIONS
 // =====================================================
 
-firstName.addEventListener("input", function () {
-  if (firstName.value.trim() === "") {
-    firstName.classList.add("is-invalid");
+// Show error message
 
-    firstName.classList.remove("is-valid");
-  } else {
-    firstName.classList.remove("is-invalid");
+function showError(input, message) {
+  input.classList.add("is-invalid");
+  input.classList.remove("is-valid");
 
-    firstName.classList.add("is-valid");
-  }
-});
+  const feedback = input.parentElement.querySelector(".invalid-feedback");
 
-// =====================================================
-// 4. EMAIL CLASS MANIPULATION
-// =====================================================
-
-email.addEventListener("input", function () {
-  if (email.value.trim() === "") {
-    email.classList.add("is-invalid");
-
-    email.classList.remove("is-valid");
-  } else {
-    email.classList.remove("is-invalid");
-
-    email.classList.add("is-valid");
-  }
-});
-
-// =====================================================
-// 5. SHOW / HIDE FORM MESSAGE
-// =====================================================
-
-formMessage.classList.add("d-none");
-
-function showMessage(message, type) {
-  formMessage.textContent = message;
-
-  formMessage.classList.remove(
-    "d-none",
-    "text-success",
-    "text-danger",
-    "text-warning",
-  );
-
-  if (type === "success") {
-    formMessage.classList.add("text-success");
-  }
-
-  if (type === "error") {
-    formMessage.classList.add("text-danger");
-  }
-
-  if (type === "warning") {
-    formMessage.classList.add("text-warning");
+  if (feedback) {
+    feedback.textContent = message;
   }
 }
 
+// Show valid state
+
+function showValid(input) {
+  input.classList.remove("is-invalid");
+  input.classList.add("is-valid");
+}
+
+// Remove validation state
+
+function clearValidation(input) {
+  input.classList.remove("is-invalid", "is-valid");
+}
+
 // =====================================================
-// 6. SHOW MESSAGE WHEN COUNTRY CHANGES
+// 3. NAME VALIDATION
 // =====================================================
+
+function validateName(input, fieldName) {
+  const value = input.value.trim();
+
+  if (value === "") {
+    showError(input, `${fieldName} is required.`);
+
+    return false;
+  }
+
+  // Only letters and spaces
+
+  const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+
+  if (!namePattern.test(value)) {
+    showError(input, `${fieldName} can contain letters and spaces only.`);
+
+    return false;
+  }
+
+  if (value.length < 2) {
+    showError(input, `${fieldName} must contain at least 2 characters.`);
+
+    return false;
+  }
+
+  showValid(input);
+
+  return true;
+}
+
+// =====================================================
+// 4. EMAIL VALIDATION
+// =====================================================
+
+function validateEmail() {
+  const value = email.value.trim();
+
+  if (value === "") {
+    showError(email, "Email is required.");
+
+    return false;
+  }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailPattern.test(value)) {
+    showError(email, "Please enter a valid email address.");
+
+    return false;
+  }
+
+  showValid(email);
+
+  return true;
+}
+
+// =====================================================
+// 5. PHONE VALIDATION
+// =====================================================
+
+function validatePhone() {
+  const value = phone.value.trim();
+
+  if (value === "") {
+    showError(phone, "Phone number is required.");
+
+    return false;
+  }
+
+  const phonePattern = /^\+?[0-9\s-]{9,15}$/;
+
+  if (!phonePattern.test(value)) {
+    showError(phone, "Please enter a valid phone number.");
+
+    return false;
+  }
+
+  showValid(phone);
+
+  return true;
+}
+
+// =====================================================
+// 6. SELECT VALIDATION
+// =====================================================
+
+function validateSelect(input, fieldName) {
+  if (input.value === "") {
+    showError(input, `Please select ${fieldName}.`);
+
+    return false;
+  }
+
+  showValid(input);
+
+  return true;
+}
+
+// =====================================================
+// 7. USERNAME VALIDATION
+// =====================================================
+
+function validateUsername() {
+  const value = username.value.trim();
+
+  if (value === "") {
+    showError(username, "Username is required.");
+
+    return false;
+  }
+
+  if (value.length < 4) {
+    showError(username, "Username must contain at least 4 characters.");
+
+    return false;
+  }
+
+  const usernamePattern = /^[A-Za-z0-9_]+$/;
+
+  if (!usernamePattern.test(value)) {
+    showError(
+      username,
+      "Username can contain letters, numbers, and underscore only.",
+    );
+
+    return false;
+  }
+
+  showValid(username);
+
+  return true;
+}
+
+// =====================================================
+// 8. PASSWORD VALIDATION
+// =====================================================
+
+function validatePassword() {
+  const value = password.value;
+
+  if (value === "") {
+    showError(password, "Password is required.");
+
+    return false;
+  }
+
+  if (value.length < 8) {
+    showError(password, "Password must contain at least 8 characters.");
+
+    return false;
+  }
+
+  const upperCase = /[A-Z]/;
+
+  const lowerCase = /[a-z]/;
+
+  const number = /[0-9]/;
+
+  if (!upperCase.test(value) || !lowerCase.test(value) || !number.test(value)) {
+    showError(
+      password,
+      "Password must contain uppercase, lowercase, and a number.",
+    );
+
+    return false;
+  }
+
+  showValid(password);
+
+  return true;
+}
+
+// =====================================================
+// 9. CONFIRM PASSWORD VALIDATION
+// =====================================================
+
+function validateConfirmPassword() {
+  const value = confirmPassword.value;
+
+  if (value === "") {
+    showError(confirmPassword, "Please confirm your password.");
+
+    return false;
+  }
+
+  if (value !== password.value) {
+    showError(confirmPassword, "Passwords do not match.");
+
+    return false;
+  }
+
+  showValid(confirmPassword);
+
+  return true;
+}
+
+// =====================================================
+// 10. DATE VALIDATION
+// =====================================================
+
+function validateDate() {
+  if (dateOfBirth.value === "") {
+    showError(dateOfBirth, "Date of birth is required.");
+
+    return false;
+  }
+
+  const selectedDate = new Date(dateOfBirth.value);
+
+  const today = new Date();
+
+  if (selectedDate > today) {
+    showError(dateOfBirth, "Date of birth cannot be in the future.");
+
+    return false;
+  }
+
+  showValid(dateOfBirth);
+
+  return true;
+}
+
+// =====================================================
+// 11. ADDRESS VALIDATION
+// =====================================================
+
+function validateAddress() {
+  const value = address.value.trim();
+
+  if (value === "") {
+    showError(address, "Address is required.");
+
+    return false;
+  }
+
+  if (value.length < 5) {
+    showError(address, "Address must contain at least 5 characters.");
+
+    return false;
+  }
+
+  showValid(address);
+
+  return true;
+}
+
+// =====================================================
+// 12. PHOTO VALIDATION
+// =====================================================
+
+function validatePhoto() {
+  if (studentPhoto.files.length === 0) {
+    showError(studentPhoto, "Please select a student photo.");
+
+    return false;
+  }
+
+  const file = studentPhoto.files[0];
+
+  const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+  if (!allowedTypes.includes(file.type)) {
+    showError(studentPhoto, "Only JPG, PNG, and WebP images are allowed.");
+
+    return false;
+  }
+
+  // Maximum size = 2 MB
+
+  const maxSize = 2 * 1024 * 1024;
+
+  if (file.size > maxSize) {
+    showError(studentPhoto, "Image size must be less than 2 MB.");
+
+    return false;
+  }
+
+  showValid(studentPhoto);
+
+  return true;
+}
+
+// =====================================================
+// 13. TERMS VALIDATION
+// =====================================================
+
+function validateTerms() {
+  if (!terms.checked) {
+    showError(terms, "You must accept the terms and conditions.");
+
+    return false;
+  }
+
+  showValid(terms);
+
+  return true;
+}
+
+// =====================================================
+// 14. REAL-TIME VALIDATION
+// =====================================================
+
+firstName.addEventListener("blur", function () {
+  validateName(firstName, "First name");
+});
+
+middleName.addEventListener("blur", function () {
+  if (middleName.value.trim() !== "") {
+    validateName(middleName, "Middle name");
+  }
+});
+
+lastName.addEventListener("blur", function () {
+  validateName(lastName, "Last name");
+});
+
+email.addEventListener("blur", validateEmail);
+
+phone.addEventListener("blur", validatePhone);
+
+username.addEventListener("blur", validateUsername);
+
+password.addEventListener("blur", validatePassword);
+
+confirmPassword.addEventListener("blur", validateConfirmPassword);
+
+dateOfBirth.addEventListener("change", validateDate);
 
 country.addEventListener("change", function () {
-  if (country.value !== "") {
-    showMessage("Country selected: " + country.value, "success");
-  }
+  validateSelect(country, "your country");
 });
 
-// =====================================================
-// 7. CHANGE INPUT ATTRIBUTE
-// =====================================================
-
-password.addEventListener("focus", function () {
-  password.setAttribute("data-active", "true");
-
-  console.log("Password data-active:", password.getAttribute("data-active"));
+department.addEventListener("change", function () {
+  validateSelect(department, "your department");
 });
 
-password.addEventListener("blur", function () {
-  password.removeAttribute("data-active");
+academicYear.addEventListener("change", function () {
+  validateSelect(academicYear, "your academic year");
 });
 
-// =====================================================
-// 8. DISABLE / ENABLE SUBMIT BUTTON
-// =====================================================
-
-terms.addEventListener("change", function () {
-  if (terms.checked) {
-    submitButton.disabled = false;
-
-    showMessage("You accepted the terms. You can submit the form.", "success");
-  } else {
-    submitButton.disabled = true;
-
-    showMessage("Please accept the terms before submitting.", "warning");
-  }
+semester.addEventListener("change", function () {
+  validateSelect(semester, "your semester");
 });
 
-// =====================================================
-// 9. SUBMIT BUTTON INITIAL STATE
-// =====================================================
+address.addEventListener("blur", validateAddress);
 
-submitButton.disabled = true;
+studentPhoto.addEventListener("change", validatePhoto);
+
+terms.addEventListener("change", validateTerms);
 
 // =====================================================
-// 10. FORM SUBMISSION
+// 15. FORM SUBMISSION VALIDATION
 // =====================================================
 
 registrationForm.addEventListener("submit", function (event) {
+  // Stop normal browser submission
+
   event.preventDefault();
 
-  // ---------------------------------------------
-  // READ VALUES
-  // ---------------------------------------------
+  // Validate every field
 
-  const firstNameValue = firstName.value.trim();
+  const firstNameValid = validateName(firstName, "First name");
 
-  const lastNameValue = lastName.value.trim();
+  const middleNameValid =
+    middleName.value.trim() === "" || validateName(middleName, "Middle name");
 
-  const emailValue = email.value.trim();
+  const lastNameValid = validateName(lastName, "Last name");
 
-  const departmentValue = department.value;
+  const emailValid = validateEmail();
 
-  // ---------------------------------------------
-  // BASIC CHECK
-  // ---------------------------------------------
+  const phoneValid = validatePhone();
 
-  if (
-    firstNameValue === "" ||
-    lastNameValue === "" ||
-    emailValue === "" ||
-    departmentValue === ""
-  ) {
-    showMessage("Please complete the required fields.", "error");
+  const dateValid = validateDate();
+
+  const countryValid = validateSelect(country, "your country");
+
+  const departmentValid = validateSelect(department, "your department");
+
+  const academicYearValid = validateSelect(academicYear, "your academic year");
+
+  const semesterValid = validateSelect(semester, "your semester");
+
+  const usernameValid = validateUsername();
+
+  const passwordValid = validatePassword();
+
+  const confirmPasswordValid = validateConfirmPassword();
+
+  const addressValid = validateAddress();
+
+  const photoValid = validatePhoto();
+
+  const termsValid = validateTerms();
+
+  // Check all results
+
+  const formIsValid =
+    firstNameValid &&
+    middleNameValid &&
+    lastNameValid &&
+    emailValid &&
+    phoneValid &&
+    dateValid &&
+    countryValid &&
+    departmentValid &&
+    academicYearValid &&
+    semesterValid &&
+    usernameValid &&
+    passwordValid &&
+    confirmPasswordValid &&
+    addressValid &&
+    photoValid &&
+    termsValid;
+
+  // =================================================
+  // IF INVALID
+  // =================================================
+
+  if (!formIsValid) {
+    formMessage.classList.remove("d-none");
+
+    formMessage.classList.remove("text-success");
+
+    formMessage.classList.add("text-danger");
+
+    formMessage.textContent = "Please correct the errors in the form.";
 
     return;
   }
 
-  // ---------------------------------------------
-  // MANIPULATE THE DOM
-  // ---------------------------------------------
+  // =================================================
+  // IF VALID
+  // =================================================
 
-  showMessage("Student registration submitted successfully!", "success");
+  formMessage.classList.remove("d-none");
 
-  // Change button text
+  formMessage.classList.remove("text-danger");
 
-  submitButton.textContent = "Registration Submitted";
+  formMessage.classList.add("text-success");
 
-  // Disable button after submission
+  formMessage.textContent = "Student registration completed successfully!";
+
+  submitButton.textContent = "Registration Successful";
 
   submitButton.disabled = true;
-
-  // Add Bootstrap styling
-
-  submitButton.classList.add("btn-success");
-
-  submitButton.classList.remove("btn-primary");
 });
 
 // =====================================================
-// 11. RESET EVENT
+// 16. RESET FORM
 // =====================================================
 
 registrationForm.addEventListener("reset", function () {
   setTimeout(function () {
-    // Remove validation classes
+    const inputs = registrationForm.querySelectorAll("input, select, textarea");
 
-    firstName.classList.remove("is-valid", "is-invalid");
+    inputs.forEach(function (input) {
+      input.classList.remove("is-valid", "is-invalid");
+    });
 
-    email.classList.remove("is-valid", "is-invalid");
-
-    // Hide message
+    formMessage.textContent = "";
 
     formMessage.classList.add("d-none");
 
-    // Restore button
-
-    submitButton.disabled = true;
+    submitButton.disabled = false;
 
     submitButton.textContent = "Submit Registration";
-
-    submitButton.classList.remove("btn-success");
-
-    submitButton.classList.add("btn-primary");
   }, 0);
 });
 
 // =====================================================
-// 12. PASSWORD SHOW / HIDE
+// 17. PASSWORD VISIBILITY
 // =====================================================
-
-const passwordToggle = document.getElementById("passwordToggle");
 
 if (passwordToggle) {
   passwordToggle.addEventListener("click", function () {
@@ -271,14 +572,4 @@ if (passwordToggle) {
   });
 }
 
-// =====================================================
-// 13. FILE NAME DISPLAY
-// =====================================================
-
-studentPhoto.addEventListener("change", function () {
-  if (studentPhoto.files.length > 0) {
-    const fileName = studentPhoto.files[0].name;
-
-    showMessage("Selected photo: " + fileName, "success");
-  }
-});
+// I have finished   next  move the next stage  to improce the validation into professional validiton ui    update the code and give the full code and  expalink the pace i have to update the code  steps by steps 
