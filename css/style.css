@@ -366,3 +366,161 @@ footer {
     width: 100%;
   }
 }
+/* =====================================================
+   DARK / LIGHT MODE
+===================================================== */
+
+/* -----------------------------------------------------
+   THEME BUTTON
+----------------------------------------------------- */
+
+.theme-switcher {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.theme-toggle {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+  color: inherit;
+
+  padding: 8px 16px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark-mode {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+/* -----------------------------------------------------
+   HEADER
+----------------------------------------------------- */
+
+body.dark-mode header {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+/* -----------------------------------------------------
+   MAIN FORM
+----------------------------------------------------- */
+
+body.dark-mode main {
+  color: #f5f5f5;
+}
+
+/* -----------------------------------------------------
+   FIELDSETS
+----------------------------------------------------- */
+
+body.dark-mode fieldset {
+  background-color: #1e1e1e;
+  border-color: #444;
+}
+
+/* -----------------------------------------------------
+   LEGENDS
+----------------------------------------------------- */
+
+body.dark-mode legend {
+  color: #ffffff;
+}
+
+/* -----------------------------------------------------
+   LABELS
+----------------------------------------------------- */
+
+body.dark-mode .form-label,
+body.dark-mode .form-check-label {
+  color: #f5f5f5;
+}
+
+/* -----------------------------------------------------
+   INPUTS
+----------------------------------------------------- */
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border-color: #555;
+}
+
+/* Input placeholder */
+
+body.dark-mode .form-control::placeholder {
+  color: #aaa;
+}
+
+/* Input focus */
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+/* -----------------------------------------------------
+   TEXT HELP
+----------------------------------------------------- */
+
+body.dark-mode .form-text {
+  color: #aaa;
+}
+
+/* -----------------------------------------------------
+   TEXTAREA
+----------------------------------------------------- */
+
+body.dark-mode textarea.form-control {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+/* -----------------------------------------------------
+   FOOTER
+----------------------------------------------------- */
+
+body.dark-mode footer {
+  background-color: #1a1a1a;
+  color: #ddd;
+}
+
+/* -----------------------------------------------------
+   PREVIEW AREA
+----------------------------------------------------- */
+
+body.dark-mode #previewContainer {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-color: #444 !important;
+}
+
+/* -----------------------------------------------------
+   THEME BUTTON IN DARK MODE
+----------------------------------------------------- */
+
+body.dark-mode .theme-toggle {
+  border-color: #777;
+  color: #ffffff;
+}

@@ -892,3 +892,39 @@ previewButton.addEventListener("click", function () {
 
   previewContainer.classList.remove("d-none");
 });
+
+// =====================================================
+// DARK / LIGHT MODE
+// =====================================================
+
+// Select the theme button
+
+const themeToggle = document.querySelector("#themeToggle");
+
+// Select the body
+
+const body = document.body;
+
+// Listen for button click
+
+themeToggle.addEventListener("click", function () {
+  // Toggle dark-mode class
+
+  body.classList.toggle("dark-mode");
+
+  // Check whether dark mode is active
+
+  const darkModeActive = body.classList.contains("dark-mode");
+
+  // Change button text
+
+  if (darkModeActive) {
+    themeToggle.textContent = "☀️ Light Mode";
+
+    themeToggle.setAttribute("aria-label", "Switch to light mode");
+  } else {
+    themeToggle.textContent = "🌙 Dark Mode";
+
+    themeToggle.setAttribute("aria-label", "Switch to dark mode");
+  }
+});
