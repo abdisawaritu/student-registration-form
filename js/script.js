@@ -1,6 +1,6 @@
 // =====================================================
 // STUDENT REGISTRATION FORM
-// FORM VALIDATION
+// PROFESSIONAL FORM VALIDATION UI
 // =====================================================
 
 // =====================================================
@@ -49,16 +49,27 @@ const resetButton = document.getElementById("resetButton");
 
 const formMessage = document.getElementById("formMessage");
 
+const validationSummary = document.getElementById("validationSummary");
+
+const validationErrorList = document.getElementById("validationErrorList");
+
 const passwordToggle = document.getElementById("passwordToggle");
 
-// =====================================================
-// 2. HELPER FUNCTIONS
-// =====================================================
+const passwordStrengthBar = document.getElementById("passwordStrengthBar");
 
-// Show error message
+const passwordStrengthText = document.getElementById("passwordStrengthText");
+
+const commentsCounter = document.getElementById("commentsCounter");
+
+const photoPreview = document.getElementById("photoPreview");
+
+// =====================================================
+// 2. SHOW ERROR
+// =====================================================
 
 function showError(input, message) {
   input.classList.add("is-invalid");
+
   input.classList.remove("is-valid");
 
   const feedback = input.parentElement.querySelector(".invalid-feedback");
@@ -68,21 +79,26 @@ function showError(input, message) {
   }
 }
 
-// Show valid state
+// =====================================================
+// 3. SHOW VALID
+// =====================================================
 
 function showValid(input) {
   input.classList.remove("is-invalid");
+
   input.classList.add("is-valid");
 }
 
-// Remove validation state
+// =====================================================
+// 4. CLEAR VALIDATION
+// =====================================================
 
 function clearValidation(input) {
   input.classList.remove("is-invalid", "is-valid");
 }
 
 // =====================================================
-// 3. NAME VALIDATION
+// 5. VALIDATE NAME
 // =====================================================
 
 function validateName(input, fieldName) {
@@ -93,8 +109,6 @@ function validateName(input, fieldName) {
 
     return false;
   }
-
-  // Only letters and spaces
 
   const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
 
@@ -116,14 +130,14 @@ function validateName(input, fieldName) {
 }
 
 // =====================================================
-// 4. EMAIL VALIDATION
+// 6. EMAIL
 // =====================================================
 
 function validateEmail() {
   const value = email.value.trim();
 
   if (value === "") {
-    showError(email, "Email is required.");
+    showError(email, "Email address is required.");
 
     return false;
   }
@@ -131,7 +145,7 @@ function validateEmail() {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailPattern.test(value)) {
-    showError(email, "Please enter a valid email address.");
+    showError(email, "Enter a valid email address.");
 
     return false;
   }
@@ -142,7 +156,7 @@ function validateEmail() {
 }
 
 // =====================================================
-// 5. PHONE VALIDATION
+// 7. PHONE
 // =====================================================
 
 function validatePhone() {
@@ -157,7 +171,7 @@ function validatePhone() {
   const phonePattern = /^\+?[0-9\s-]{9,15}$/;
 
   if (!phonePattern.test(value)) {
-    showError(phone, "Please enter a valid phone number.");
+    showError(phone, "Enter a valid phone number.");
 
     return false;
   }
@@ -168,7 +182,7 @@ function validatePhone() {
 }
 
 // =====================================================
-// 6. SELECT VALIDATION
+// 8. SELECT
 // =====================================================
 
 function validateSelect(input, fieldName) {
@@ -184,7 +198,7 @@ function validateSelect(input, fieldName) {
 }
 
 // =====================================================
-// 7. USERNAME VALIDATION
+// 9. USERNAME
 // =====================================================
 
 function validateUsername() {
@@ -202,13 +216,10 @@ function validateUsername() {
     return false;
   }
 
-  const usernamePattern = /^[A-Za-z0-9_]+$/;
+  const pattern = /^[A-Za-z0-9_]+$/;
 
-  if (!usernamePattern.test(value)) {
-    showError(
-      username,
-      "Username can contain letters, numbers, and underscore only.",
-    );
+  if (!pattern.test(value)) {
+    showError(username, "Use letters, numbers, and underscore only.");
 
     return false;
   }
@@ -219,7 +230,55 @@ function validateUsername() {
 }
 
 // =====================================================
-// 8. PASSWORD VALIDATION
+// 10. PASSWORD STRENGTH
+// =====================================================
+
+function updatePasswordStrength() {
+  const value = password.value;
+
+  let score = 0;
+
+  if (value.length >= 8) {
+    score++;
+  }
+
+  if (/[A-Z]/.test(value)) {
+    score++;
+  }
+
+  if (/[a-z]/.test(value)) {
+    score++;
+  }
+
+  if (/[0-9]/.test(value)) {
+    score++;
+  }
+
+  if (/[^A-Za-z0-9]/.test(value)) {
+    score++;
+  }
+
+  const percentages = ["0%", "20%", "40%", "60%", "80%", "100%"];
+
+  passwordStrengthBar.style.width = percentages[score];
+
+  if (score === 0) {
+    passwordStrengthText.textContent = "Password strength: Not entered";
+  } else if (score <= 2) {
+    passwordStrengthText.textContent = "Password strength: Weak";
+  } else if (score === 3) {
+    passwordStrengthText.textContent = "Password strength: Medium";
+  } else if (score === 4) {
+    passwordStrengthText.textContent = "Password strength: Strong";
+  } else {
+    passwordStrengthText.textContent = "Password strength: Very strong";
+  }
+
+  return score;
+}
+
+// =====================================================
+// 11. PASSWORD VALIDATION
 // =====================================================
 
 function validatePassword() {
@@ -237,17 +296,20 @@ function validatePassword() {
     return false;
   }
 
-  const upperCase = /[A-Z]/;
+  if (!/[A-Z]/.test(value)) {
+    showError(password, "Password needs at least one uppercase letter.");
 
-  const lowerCase = /[a-z]/;
+    return false;
+  }
 
-  const number = /[0-9]/;
+  if (!/[a-z]/.test(value)) {
+    showError(password, "Password needs at least one lowercase letter.");
 
-  if (!upperCase.test(value) || !lowerCase.test(value) || !number.test(value)) {
-    showError(
-      password,
-      "Password must contain uppercase, lowercase, and a number.",
-    );
+    return false;
+  }
+
+  if (!/[0-9]/.test(value)) {
+    showError(password, "Password needs at least one number.");
 
     return false;
   }
@@ -258,7 +320,7 @@ function validatePassword() {
 }
 
 // =====================================================
-// 9. CONFIRM PASSWORD VALIDATION
+// 12. CONFIRM PASSWORD
 // =====================================================
 
 function validateConfirmPassword() {
@@ -282,7 +344,7 @@ function validateConfirmPassword() {
 }
 
 // =====================================================
-// 10. DATE VALIDATION
+// 13. DATE
 // =====================================================
 
 function validateDate() {
@@ -308,7 +370,7 @@ function validateDate() {
 }
 
 // =====================================================
-// 11. ADDRESS VALIDATION
+// 14. ADDRESS
 // =====================================================
 
 function validateAddress() {
@@ -332,7 +394,7 @@ function validateAddress() {
 }
 
 // =====================================================
-// 12. PHOTO VALIDATION
+// 15. PHOTO VALIDATION
 // =====================================================
 
 function validatePhoto() {
@@ -352,12 +414,10 @@ function validatePhoto() {
     return false;
   }
 
-  // Maximum size = 2 MB
-
   const maxSize = 2 * 1024 * 1024;
 
   if (file.size > maxSize) {
-    showError(studentPhoto, "Image size must be less than 2 MB.");
+    showError(studentPhoto, "Image must be smaller than 2 MB.");
 
     return false;
   }
@@ -368,7 +428,7 @@ function validatePhoto() {
 }
 
 // =====================================================
-// 13. TERMS VALIDATION
+// 16. TERMS
 // =====================================================
 
 function validateTerms() {
@@ -384,7 +444,93 @@ function validateTerms() {
 }
 
 // =====================================================
-// 14. REAL-TIME VALIDATION
+// 17. SHOW FORM MESSAGE
+// =====================================================
+
+function showFormMessage(message, type) {
+  formMessage.classList.remove("d-none", "alert-success", "alert-danger");
+
+  if (type === "success") {
+    formMessage.classList.add("alert-success");
+  } else {
+    formMessage.classList.add("alert-danger");
+  }
+
+  formMessage.textContent = message;
+}
+
+// =====================================================
+// 18. VALIDATION SUMMARY
+// =====================================================
+
+function showValidationSummary(errors) {
+  validationErrorList.innerHTML = "";
+
+  errors.forEach(function (error) {
+    const li = document.createElement("li");
+
+    li.textContent = error;
+
+    validationErrorList.appendChild(li);
+  });
+
+  validationSummary.classList.remove("d-none");
+}
+
+function hideValidationSummary() {
+  validationSummary.classList.add("d-none");
+}
+
+// =====================================================
+// 19. REAL-TIME PASSWORD STRENGTH
+// =====================================================
+
+password.addEventListener("input", function () {
+  updatePasswordStrength();
+});
+
+// =====================================================
+// 20. REAL-TIME CONFIRM PASSWORD
+// =====================================================
+
+confirmPassword.addEventListener("input", function () {
+  if (confirmPassword.value !== "") {
+    validateConfirmPassword();
+  }
+});
+
+// =====================================================
+// 21. REAL-TIME COMMENTS COUNTER
+// =====================================================
+
+comments.addEventListener("input", function () {
+  commentsCounter.textContent = `${comments.value.length} / 300`;
+});
+
+// =====================================================
+// 22. PHOTO PREVIEW
+// =====================================================
+
+studentPhoto.addEventListener("change", function () {
+  if (studentPhoto.files.length === 0) {
+    photoPreview.classList.add("d-none");
+
+    return;
+  }
+
+  const file = studentPhoto.files[0];
+
+  if (file.type.startsWith("image/")) {
+    const imageURL = URL.createObjectURL(file);
+
+    photoPreview.src = imageURL;
+
+    photoPreview.classList.remove("d-none");
+  }
+});
+
+// =====================================================
+// 23. BLUR VALIDATION
 // =====================================================
 
 firstName.addEventListener("blur", function () {
@@ -409,9 +555,17 @@ username.addEventListener("blur", validateUsername);
 
 password.addEventListener("blur", validatePassword);
 
-confirmPassword.addEventListener("blur", validateConfirmPassword);
-
 dateOfBirth.addEventListener("change", validateDate);
+
+address.addEventListener("blur", validateAddress);
+
+studentPhoto.addEventListener("change", validatePhoto);
+
+terms.addEventListener("change", validateTerms);
+
+// =====================================================
+// 24. SELECT VALIDATION
+// =====================================================
 
 country.addEventListener("change", function () {
   validateSelect(country, "your country");
@@ -429,35 +583,67 @@ semester.addEventListener("change", function () {
   validateSelect(semester, "your semester");
 });
 
-address.addEventListener("blur", validateAddress);
-
-studentPhoto.addEventListener("change", validatePhoto);
-
-terms.addEventListener("change", validateTerms);
-
 // =====================================================
-// 15. FORM SUBMISSION VALIDATION
+// 25. FORM SUBMISSION
 // =====================================================
 
 registrationForm.addEventListener("submit", function (event) {
-  // Stop normal browser submission
-
   event.preventDefault();
 
-  // Validate every field
+  const errors = [];
+
+  // ---------------------------------------------
+  // VALIDATE NAME
+  // ---------------------------------------------
 
   const firstNameValid = validateName(firstName, "First name");
+
+  if (!firstNameValid) {
+    errors.push("Check your first name.");
+  }
 
   const middleNameValid =
     middleName.value.trim() === "" || validateName(middleName, "Middle name");
 
   const lastNameValid = validateName(lastName, "Last name");
 
+  if (!lastNameValid) {
+    errors.push("Check your last name.");
+  }
+
+  // ---------------------------------------------
+  // EMAIL
+  // ---------------------------------------------
+
   const emailValid = validateEmail();
+
+  if (!emailValid) {
+    errors.push("Check your email address.");
+  }
+
+  // ---------------------------------------------
+  // PHONE
+  // ---------------------------------------------
 
   const phoneValid = validatePhone();
 
+  if (!phoneValid) {
+    errors.push("Check your phone number.");
+  }
+
+  // ---------------------------------------------
+  // DATE
+  // ---------------------------------------------
+
   const dateValid = validateDate();
+
+  if (!dateValid) {
+    errors.push("Check your date of birth.");
+  }
+
+  // ---------------------------------------------
+  // SELECTS
+  // ---------------------------------------------
 
   const countryValid = validateSelect(country, "your country");
 
@@ -467,19 +653,61 @@ registrationForm.addEventListener("submit", function (event) {
 
   const semesterValid = validateSelect(semester, "your semester");
 
+  // ---------------------------------------------
+  // ACCOUNT
+  // ---------------------------------------------
+
   const usernameValid = validateUsername();
+
+  if (!usernameValid) {
+    errors.push("Check your username.");
+  }
 
   const passwordValid = validatePassword();
 
+  if (!passwordValid) {
+    errors.push("Check your password.");
+  }
+
   const confirmPasswordValid = validateConfirmPassword();
+
+  if (!confirmPasswordValid) {
+    errors.push("Passwords do not match.");
+  }
+
+  // ---------------------------------------------
+  // ADDRESS
+  // ---------------------------------------------
 
   const addressValid = validateAddress();
 
+  if (!addressValid) {
+    errors.push("Check your address.");
+  }
+
+  // ---------------------------------------------
+  // PHOTO
+  // ---------------------------------------------
+
   const photoValid = validatePhoto();
+
+  if (!photoValid) {
+    errors.push("Check your student photo.");
+  }
+
+  // ---------------------------------------------
+  // TERMS
+  // ---------------------------------------------
 
   const termsValid = validateTerms();
 
-  // Check all results
+  if (!termsValid) {
+    errors.push("Accept the terms and conditions.");
+  }
+
+  // ---------------------------------------------
+  // CHECK EVERYTHING
+  // ---------------------------------------------
 
   const formIsValid =
     firstNameValid &&
@@ -500,32 +728,37 @@ registrationForm.addEventListener("submit", function (event) {
     termsValid;
 
   // =================================================
-  // IF INVALID
+  // INVALID FORM
   // =================================================
 
   if (!formIsValid) {
-    formMessage.classList.remove("d-none");
+    showFormMessage("Please correct the highlighted errors.", "error");
 
-    formMessage.classList.remove("text-success");
+    showValidationSummary(errors);
 
-    formMessage.classList.add("text-danger");
+    // Find first invalid field
 
-    formMessage.textContent = "Please correct the errors in the form.";
+    const firstInvalid = registrationForm.querySelector(".is-invalid");
+
+    if (firstInvalid) {
+      firstInvalid.focus();
+
+      firstInvalid.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
 
     return;
   }
 
   // =================================================
-  // IF VALID
+  // VALID FORM
   // =================================================
 
-  formMessage.classList.remove("d-none");
+  hideValidationSummary();
 
-  formMessage.classList.remove("text-danger");
-
-  formMessage.classList.add("text-success");
-
-  formMessage.textContent = "Student registration completed successfully!";
+  showFormMessage("Student registration completed successfully!", "success");
 
   submitButton.textContent = "Registration Successful";
 
@@ -533,43 +766,129 @@ registrationForm.addEventListener("submit", function (event) {
 });
 
 // =====================================================
-// 16. RESET FORM
+// 26. RESET
 // =====================================================
 
 registrationForm.addEventListener("reset", function () {
   setTimeout(function () {
-    const inputs = registrationForm.querySelectorAll("input, select, textarea");
+    const elements = registrationForm.querySelectorAll(
+      "input, select, textarea",
+    );
 
-    inputs.forEach(function (input) {
-      input.classList.remove("is-valid", "is-invalid");
+    elements.forEach(function (element) {
+      clearValidation(element);
     });
 
     formMessage.textContent = "";
 
     formMessage.classList.add("d-none");
 
+    hideValidationSummary();
+
+    passwordStrengthBar.style.width = "0%";
+
+    passwordStrengthText.textContent = "Password strength: Not entered";
+
+    commentsCounter.textContent = "0 / 300";
+
+    photoPreview.src = "";
+
+    photoPreview.classList.add("d-none");
+
     submitButton.disabled = false;
 
     submitButton.textContent = "Submit Registration";
+
+    passwordToggle.textContent = "Show Password";
+
+    password.type = "password";
   }, 0);
 });
 
 // =====================================================
-// 17. PASSWORD VISIBILITY
+// 27. PASSWORD VISIBILITY
 // =====================================================
 
-if (passwordToggle) {
-  passwordToggle.addEventListener("click", function () {
-    if (password.type === "password") {
-      password.type = "text";
+passwordToggle.addEventListener("click", function () {
+  if (password.type === "password") {
+    password.type = "text";
 
-      passwordToggle.textContent = "Hide Password";
-    } else {
-      password.type = "password";
+    passwordToggle.textContent = "Hide Password";
+  } else {
+    password.type = "password";
 
-      passwordToggle.textContent = "Show Password";
-    }
-  });
-}
+    passwordToggle.textContent = "Show Password";
+  }
+});
 
+// =====================================================
+// PREVIEW BUTTON
+// =====================================================
 
+const previewButton = document.querySelector("#previewButton");
+
+const previewContainer = document.querySelector("#previewContainer");
+
+const previewContent = document.querySelector("#previewContent");
+
+// =====================================================
+// PREVIEW BUTTON CLICK EVENT
+// =====================================================
+
+previewButton.addEventListener("click", function () {
+  // Get values from the form
+
+  const firstName = document.querySelector("#firstName").value;
+
+  const middleName = document.querySelector("#middleName").value;
+
+  const lastName = document.querySelector("#lastName").value;
+
+  const email = document.querySelector("#email").value;
+
+  const phone = document.querySelector("#phone").value;
+
+  const department = document.querySelector("#department").value;
+
+  const academicYear = document.querySelector("#academicYear").value;
+
+  const semester = document.querySelector("#semester").value;
+
+  // Create the preview content
+
+  previewContent.innerHTML = `
+    <p>
+      <strong>Name:</strong>
+      ${firstName} ${middleName} ${lastName}
+    </p>
+
+    <p>
+      <strong>Email:</strong>
+      ${email}
+    </p>
+
+    <p>
+      <strong>Phone:</strong>
+      ${phone}
+    </p>
+
+    <p>
+      <strong>Department:</strong>
+      ${department}
+    </p>
+
+    <p>
+      <strong>Academic Year:</strong>
+      ${academicYear}
+    </p>
+
+    <p>
+      <strong>Semester:</strong>
+      ${semester}
+    </p>
+  `;
+
+  // Show the preview container
+
+  previewContainer.classList.remove("d-none");
+});

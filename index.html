@@ -12,20 +12,26 @@
 
     <title>Student Registration Form</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- =====================================================
+         BOOTSTRAP CSS
+    ====================================================== -->
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
 
-    <!-- Custom CSS -->
+    <!-- =====================================================
+         CUSTOM CSS
+    ====================================================== -->
+
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
-    <!-- =========================================
+    <!-- =====================================================
          HEADER
-    ========================================== -->
+    ====================================================== -->
 
     <header>
       <div class="container">
@@ -39,12 +45,14 @@
       </div>
     </header>
 
-    <!-- =========================================
+    <!-- =====================================================
          MAIN CONTENT
-    ========================================== -->
+    ====================================================== -->
 
     <main class="container my-5">
-      <!-- Form introduction -->
+      <!-- ===================================================
+           FORM INTRODUCTION
+      ==================================================== -->
 
       <section class="form-introduction mb-4">
         <h2>Create Your Student Profile</h2>
@@ -55,9 +63,9 @@
         </p>
       </section>
 
-      <!-- =====================================
-             REGISTRATION FORM
-        ====================================== -->
+      <!-- ===================================================
+           REGISTRATION FORM
+      ==================================================== -->
 
       <form
         id="registrationForm"
@@ -66,23 +74,25 @@
         autocomplete="on"
         novalidate
       >
-        <!-- =====================================
-                 PERSONAL INFORMATION
-            ====================================== -->
+        <!-- =================================================
+             PERSONAL INFORMATION
+        ================================================== -->
 
         <fieldset>
           <legend>
-            <span class="section-number">01</span>
+            <span class="section-number"> 01 </span>
+
             Personal Information
           </legend>
 
           <div class="row g-4">
-            <!-- First Name -->
+            <!-- FIRST NAME -->
 
             <div class="col-12 col-md-6">
               <label for="firstName" class="form-label">
                 First Name
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -103,9 +113,11 @@
               </div>
 
               <div class="invalid-feedback">Please enter your first name.</div>
+
+              <div class="valid-feedback">First name looks good.</div>
             </div>
 
-            <!-- Middle Name -->
+            <!-- MIDDLE NAME -->
 
             <div class="col-12 col-md-6">
               <label for="middleName" class="form-label"> Middle Name </label>
@@ -119,14 +131,21 @@
                 autocomplete="additional-name"
                 maxlength="30"
               />
+
+              <div class="invalid-feedback">
+                Please enter your middle name correctly.
+              </div>
+
+              <div class="valid-feedback">Middle name looks good.</div>
             </div>
 
-            <!-- Last Name -->
+            <!-- LAST NAME -->
 
             <div class="col-12 col-md-6">
               <label for="lastName" class="form-label">
                 Last Name
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -147,14 +166,17 @@
               </div>
 
               <div class="invalid-feedback">Please enter your last name.</div>
+
+              <div class="valid-feedback">Last name looks good.</div>
             </div>
 
-            <!-- Date of Birth -->
+            <!-- DATE OF BIRTH -->
 
             <div class="col-12 col-md-6">
               <label for="dateOfBirth" class="form-label">
                 Date of Birth
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -169,17 +191,22 @@
               <div class="invalid-feedback">
                 Please select your date of birth.
               </div>
+
+              <div class="valid-feedback">Date of birth is valid.</div>
             </div>
 
-            <!-- Gender -->
+            <!-- GENDER -->
 
             <div class="col-12">
               <p class="form-label mb-2">
                 Gender
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </p>
 
               <div class="d-flex flex-wrap gap-4">
+                <!-- MALE -->
+
                 <div class="form-check">
                   <input
                     type="radio"
@@ -193,6 +220,8 @@
                   <label for="male" class="form-check-label"> Male </label>
                 </div>
 
+                <!-- FEMALE -->
+
                 <div class="form-check">
                   <input
                     type="radio"
@@ -204,6 +233,8 @@
 
                   <label for="female" class="form-check-label"> Female </label>
                 </div>
+
+                <!-- OTHER -->
 
                 <div class="form-check">
                   <input
@@ -221,24 +252,25 @@
           </div>
         </fieldset>
 
-        <!-- =====================================
-                 CONTACT INFORMATION
-            ====================================== -->
+        <!-- =================================================
+             CONTACT INFORMATION
+        ================================================== -->
 
         <fieldset>
           <legend>
-            <span class="section-number">02</span>
+            <span class="section-number"> 02 </span>
 
             Contact Information
           </legend>
 
           <div class="row g-4">
-            <!-- Email -->
+            <!-- EMAIL -->
 
             <div class="col-12 col-md-6">
               <label for="email" class="form-label">
                 Email Address
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -254,14 +286,17 @@
               <div class="invalid-feedback">
                 Please enter a valid email address.
               </div>
+
+              <div class="valid-feedback">Email address looks good.</div>
             </div>
 
-            <!-- Phone -->
+            <!-- PHONE -->
 
             <div class="col-12 col-md-6">
               <label for="phone" class="form-label">
                 Phone Number
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -278,14 +313,17 @@
               <div class="invalid-feedback">
                 Please enter a valid phone number.
               </div>
+
+              <div class="valid-feedback">Phone number looks good.</div>
             </div>
 
-            <!-- Address -->
+            <!-- ADDRESS -->
 
             <div class="col-12">
               <label for="address" class="form-label">
                 Address
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <textarea
@@ -300,14 +338,17 @@
               ></textarea>
 
               <div class="invalid-feedback">Please enter your address.</div>
+
+              <div class="valid-feedback">Address looks good.</div>
             </div>
 
-            <!-- Country -->
+            <!-- COUNTRY -->
 
             <div class="col-12 col-md-6">
               <label for="country" class="form-label">
                 Country
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <select
@@ -329,28 +370,31 @@
               </select>
 
               <div class="invalid-feedback">Please select your country.</div>
+
+              <div class="valid-feedback">Country selected.</div>
             </div>
           </div>
         </fieldset>
 
-        <!-- =====================================
-                 ACADEMIC INFORMATION
-            ====================================== -->
+        <!-- =================================================
+             ACADEMIC INFORMATION
+        ================================================== -->
 
         <fieldset>
           <legend>
-            <span class="section-number">03</span>
+            <span class="section-number"> 03 </span>
 
             Academic Information
           </legend>
 
           <div class="row g-4">
-            <!-- Student ID -->
+            <!-- STUDENT ID -->
 
             <div class="col-12 col-md-6">
               <label for="studentId" class="form-label">
                 Student ID
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -365,14 +409,17 @@
               />
 
               <div class="invalid-feedback">Please enter your student ID.</div>
+
+              <div class="valid-feedback">Student ID looks good.</div>
             </div>
 
-            <!-- Department -->
+            <!-- DEPARTMENT -->
 
             <div class="col-12 col-md-6">
               <label for="department" class="form-label">
                 Department
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <select
@@ -411,14 +458,17 @@
               </select>
 
               <div class="invalid-feedback">Please select your department.</div>
+
+              <div class="valid-feedback">Department selected.</div>
             </div>
 
-            <!-- Academic Year -->
+            <!-- ACADEMIC YEAR -->
 
             <div class="col-12 col-md-4">
               <label for="academicYear" class="form-label">
                 Academic Year
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <select
@@ -439,14 +489,21 @@
 
                 <option value="fifth">Fifth Year</option>
               </select>
+
+              <div class="invalid-feedback">
+                Please select your academic year.
+              </div>
+
+              <div class="valid-feedback">Academic year selected.</div>
             </div>
 
-            <!-- Semester -->
+            <!-- SEMESTER -->
 
             <div class="col-12 col-md-4">
               <label for="semester" class="form-label">
                 Semester
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <select
@@ -461,17 +518,24 @@
 
                 <option value="semester-two">Semester II</option>
               </select>
+
+              <div class="invalid-feedback">Please select your semester.</div>
+
+              <div class="valid-feedback">Semester selected.</div>
             </div>
 
-            <!-- Enrollment Type -->
+            <!-- ENROLLMENT TYPE -->
 
             <div class="col-12 col-md-4">
               <p class="form-label mb-2">
                 Enrollment Type
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </p>
 
               <div class="d-flex flex-column gap-2">
+                <!-- REGULAR -->
+
                 <div class="form-check">
                   <input
                     type="radio"
@@ -486,6 +550,8 @@
                     Regular
                   </label>
                 </div>
+
+                <!-- EXTENSION -->
 
                 <div class="form-check">
                   <input
@@ -505,13 +571,13 @@
           </div>
         </fieldset>
 
-        <!-- =====================================
-                 AREAS OF INTEREST
-            ====================================== -->
+        <!-- =================================================
+             AREAS OF INTEREST
+        ================================================== -->
 
         <fieldset>
           <legend>
-            <span class="section-number">04</span>
+            <span class="section-number"> 04 </span>
 
             Areas of Interest
           </legend>
@@ -519,6 +585,8 @@
           <p class="form-label">Select your areas of interest.</p>
 
           <div class="row g-3">
+            <!-- WEB DEVELOPMENT -->
+
             <div class="col-12 col-sm-6 col-md-4">
               <div class="form-check">
                 <input
@@ -534,6 +602,8 @@
                 </label>
               </div>
             </div>
+
+            <!-- ARTIFICIAL INTELLIGENCE -->
 
             <div class="col-12 col-sm-6 col-md-4">
               <div class="form-check">
@@ -551,6 +621,8 @@
               </div>
             </div>
 
+            <!-- NETWORKING -->
+
             <div class="col-12 col-sm-6 col-md-4">
               <div class="form-check">
                 <input
@@ -567,6 +639,8 @@
               </div>
             </div>
 
+            <!-- EMBEDDED SYSTEMS -->
+
             <div class="col-12 col-sm-6 col-md-4">
               <div class="form-check">
                 <input
@@ -582,6 +656,8 @@
                 </label>
               </div>
             </div>
+
+            <!-- CYBER SECURITY -->
 
             <div class="col-12 col-sm-6 col-md-4">
               <div class="form-check">
@@ -601,13 +677,13 @@
           </div>
         </fieldset>
 
-        <!-- =====================================
-                 STUDENT PHOTO
-            ====================================== -->
+        <!-- =================================================
+             STUDENT PHOTO
+        ================================================== -->
 
         <fieldset>
           <legend>
-            <span class="section-number">05</span>
+            <span class="section-number"> 05 </span>
 
             Student Photo
           </legend>
@@ -616,6 +692,8 @@
             <div class="col-12 col-md-6">
               <label for="studentPhoto" class="form-label">
                 Upload Student Photo
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -623,32 +701,54 @@
                 id="studentPhoto"
                 name="studentPhoto"
                 class="form-control"
-                accept=".jpg,.jpeg,.png"
+                accept=".jpg,.jpeg,.png,.webp"
+                required
               />
 
-              <div class="form-text">Accepted formats: JPG, JPEG, PNG.</div>
+              <div class="form-text">
+                Accepted formats: JPG, JPEG, PNG, WebP. Maximum size: 2 MB.
+              </div>
+
+              <div class="invalid-feedback">
+                Please select a valid student photo.
+              </div>
+
+              <div class="valid-feedback">Photo selected successfully.</div>
+
+              <!-- PHOTO PREVIEW -->
+
+              <div class="mt-3">
+                <img
+                  id="photoPreview"
+                  src=""
+                  alt="Student photo preview"
+                  class="img-thumbnail d-none"
+                  width="150"
+                />
+              </div>
             </div>
           </div>
         </fieldset>
 
-        <!-- =====================================
-                 ACCOUNT INFORMATION
-            ====================================== -->
+        <!-- =================================================
+             ACCOUNT INFORMATION
+        ================================================== -->
 
         <fieldset>
           <legend>
-            <span class="section-number">06</span>
+            <span class="section-number"> 06 </span>
 
             Account Information
           </legend>
 
           <div class="row g-4">
-            <!-- Username -->
+            <!-- USERNAME -->
 
             <div class="col-12 col-md-6">
               <label for="username" class="form-label">
                 Username
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -666,14 +766,17 @@
               <div class="invalid-feedback">
                 Username must contain at least 4 characters.
               </div>
+
+              <div class="valid-feedback">Username looks good.</div>
             </div>
 
-            <!-- Password -->
+            <!-- PASSWORD -->
 
             <div class="col-12 col-md-6">
               <label for="password" class="form-label">
                 Password
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -687,6 +790,9 @@
                 maxlength="50"
                 required
               />
+
+              <!-- PASSWORD TOGGLE -->
+
               <button
                 type="button"
                 id="passwordToggle"
@@ -695,21 +801,42 @@
                 Show Password
               </button>
 
+              <!-- PASSWORD STRENGTH -->
+
+              <div class="password-strength mt-3">
+                <div class="progress">
+                  <div
+                    id="passwordStrengthBar"
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: 0%"
+                  ></div>
+                </div>
+
+                <small id="passwordStrengthText" class="form-text">
+                  Password strength: Not entered
+                </small>
+              </div>
+
               <div class="form-text">
-                Password must contain at least 8 characters.
+                Use at least 8 characters, including uppercase, lowercase, and a
+                number.
               </div>
 
               <div class="invalid-feedback">
                 Password must contain at least 8 characters.
               </div>
+
+              <div class="valid-feedback">Password is valid.</div>
             </div>
 
-            <!-- Confirm Password -->
+            <!-- CONFIRM PASSWORD -->
 
             <div class="col-12 col-md-6">
               <label for="confirmPassword" class="form-label">
                 Confirm Password
-                <span class="required">*</span>
+
+                <span class="required"> * </span>
               </label>
 
               <input
@@ -725,22 +852,26 @@
               />
 
               <div class="invalid-feedback">Passwords must match.</div>
+
+              <div class="valid-feedback">Passwords match.</div>
             </div>
           </div>
         </fieldset>
 
-        <!-- =====================================
-                 ADDITIONAL INFORMATION
-            ====================================== -->
+        <!-- =================================================
+             ADDITIONAL INFORMATION
+        ================================================== -->
 
         <fieldset>
           <legend>
-            <span class="section-number">07</span>
+            <span class="section-number"> 07 </span>
 
             Additional Information
           </legend>
 
           <div class="row g-4">
+            <!-- COMMENTS -->
+
             <div class="col-12">
               <label for="comments" class="form-label">
                 Additional Comments
@@ -756,7 +887,15 @@
               ></textarea>
 
               <div class="form-text">Maximum 500 characters.</div>
+
+              <!-- CHARACTER COUNTER -->
+
+              <div class="text-end">
+                <small id="commentsCounter" class="text-muted"> 0 / 500 </small>
+              </div>
             </div>
+
+            <!-- PREFERRED CONTACT -->
 
             <div class="col-12 col-md-6">
               <label for="preferredContact" class="form-label">
@@ -778,13 +917,13 @@
           </div>
         </fieldset>
 
-        <!-- =====================================
-                 TERMS
-            ====================================== -->
+        <!-- =================================================
+             TERMS AND CONDITIONS
+        ================================================== -->
 
         <fieldset>
           <legend>
-            <span class="section-number">08</span>
+            <span class="section-number"> 08 </span>
 
             Terms and Conditions
           </legend>
@@ -801,18 +940,36 @@
 
             <label for="terms" class="form-check-label">
               I agree to the terms and conditions.
-              <span class="required">*</span>
-            </label>
-          </div>
 
-          <div id="termsError" class="invalid-feedback">
-            You must accept the terms and conditions.
+              <span class="required"> * </span>
+            </label>
+
+            <div id="termsError" class="invalid-feedback">
+              You must accept the terms and conditions.
+            </div>
+
+            <div class="valid-feedback">Terms and conditions accepted.</div>
           </div>
         </fieldset>
 
-        <!-- =====================================
-                 FORM STATUS MESSAGE
-            ====================================== -->
+        <!-- =================================================
+             VALIDATION SUMMARY
+        ================================================== -->
+
+        <div
+          id="validationSummary"
+          class="alert alert-danger d-none"
+          role="alert"
+          aria-live="assertive"
+        >
+          <strong> Please correct the following errors: </strong>
+
+          <ul id="validationErrorList" class="mb-0 mt-2"></ul>
+        </div>
+
+        <!-- =================================================
+             FORM STATUS MESSAGE
+        ================================================== -->
 
         <div
           id="formMessage"
@@ -821,14 +978,18 @@
           aria-live="polite"
         ></div>
 
-        <!-- =====================================
-                 BUTTONS
-            ====================================== -->
+        <!-- =================================================
+             FORM BUTTONS
+        ================================================== -->
 
         <div class="form-actions d-flex flex-column flex-sm-row gap-3">
+          <!-- SUBMIT -->
+
           <button type="submit" id="submitButton" class="btn btn-primary">
             Register
           </button>
+
+          <!-- RESET -->
 
           <button
             type="reset"
@@ -838,6 +999,8 @@
             Clear Form
           </button>
 
+          <!-- PREVIEW -->
+
           <button
             type="button"
             id="previewButton"
@@ -846,12 +1009,21 @@
             Preview
           </button>
         </div>
+        <!-- =================================================
+     PREVIEW AREA
+================================================== -->
+
+        <div id="previewContainer" class="alert alert-light border mt-4 d-none">
+          <h4 class="mb-3">Registration Preview</h4>
+
+          <div id="previewContent"></div>
+        </div>
       </form>
     </main>
 
-    <!-- =========================================
+    <!-- =====================================================
          FOOTER
-    ========================================== -->
+    ====================================================== -->
 
     <footer class="py-4 text-center">
       <div class="container">
@@ -859,11 +1031,15 @@
       </div>
     </footer>
 
-    <!-- Bootstrap JavaScript -->
+    <!-- =====================================================
+         BOOTSTRAP JAVASCRIPT
+    ====================================================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JavaScript -->
+    <!-- =====================================================
+         CUSTOM JAVASCRIPT
+    ====================================================== -->
 
     <script src="js/script.js"></script>
   </body>
